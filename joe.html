@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Joe's Hotdog Stand</h1>
+<br>
+<script>
+var prices = {hotdog: 3.25, fries: 2, drinks: 1.50};
+var quantities = {hotdog: 0, fries: 0, drinks: 0};
+
+//create form
+var x = document.createElement("FORM");
+x.setAttribute("id", "orders");
+document.body.appendChild(x);
+
+//names and input boxes
+for (var key in quantities){
+	var textNode = document.createTextNode(key);
+	x.appendChild(textNode);
+
+	var y = document.createElement("INPUT");
+	y.setAttribute("type", "text");
+	y.setAttribute("id", key);
+	y.setAttribute("value", quantities[key]);
+	x.appendChild(y);
+	var linebreak = document.createElement('br');
+	x.appendChild(linebreak);
+}
+
+//button
+var b = document.createElement("BUTTON");
+b.setAttribute("onclick", "price()");
+var textNode = document.createTextNode("Order");
+b.appendChild(textNode);
+document.body.appendChild(b);
+
+function price(){
+	var total = 0;
+	//calculating total
+	for (var key in quantities){
+		var number = document.getElementById(key).value;
+		quantities[key] = number;
+	}
+	
+	//items
+	var hotdogprice = prices['hotdog'] * quantities['hotdog'];
+	var friesprice = prices['fries'] * quantities['fries'];
+	var drinksprice = prices['drinks'] * quantities['drinks'];
+	var totalbefore = hotdogprice + friesprice + drinksprice;
+
+	//checking promotion
+	if (totalbefore >= 20){
+		var discount = totalbefore * .1;
+		total = totalbefore - discount;
+		discount = discount.toFixed(2);
+	}
+	else {
+		var discount = " N/A";
+		total = totalbefore;
+	}
+
+	//tax
+	var tax = total * .0625;
+	total = total + tax;
+
+	hotdogprice = hotdogprice.toFixed(2);
+	friesprice = friesprice.toFixed(2);
+	drinksprice = drinksprice.toFixed(2);
+	totalbefore = totalbefore.toFixed(2);
+	tax = tax.toFixed(2);
+	total = total.toFixed(2);
+
+	alert(quantities['hotdog']+ " hotdogs: $"+ hotdogprice+ "\n"+
+		quantities['fries']+ " fries: $"+ friesprice+ "\n"+
+		quantities['drinks']+ " drinks: $"+ drinksprice+ "\n"+
+		"subtotal: $" + totalbefore + "\n"+
+		"discount: $" + discount + "\n"+
+		"tax: $" + tax + "\n"+
+		"total: $" + total
+			)
+}
+
+
+</script>
+
+
+</body>
+</html>
